@@ -178,6 +178,40 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 150%;
 }
 
+/* music list */
+
+.app__music-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
+}
+
+.app__music-button {
+    font-family: Montserrat;
+    font-size: 1.8rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    background: none;
+    padding: 0.8rem;
+    color: var(--color-secondary);
+    border: none;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.app__music-button:focus {
+    border-radius: 0.8rem;
+    box-shadow: 0 0 8px #0a7f97;
+    background: linear-gradient(to bottom, #1e579900 0%,#3c1257 15%, #44159C 19%,#44159c 20%,#6F1F9E 50%,#6F1F9E 80%,#44159C 81%,#3c1257 85%,#1e579900 100%);
+    font-weight: 600;
+}
+
 /* toggle */
 .toggle {
     cursor: pointer;

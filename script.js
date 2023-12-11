@@ -69,7 +69,7 @@ function alterarContexto(contexto) {
         case "descanso-curto":
             titulo.innerHTML = `
             Descansar você deve, padawan.<br>
-            <strong class="app__title-strong">Revigorado, mais forte se tornará.</strong>
+            <strong class="app__title-strong">Mais forte se tornará.</strong>
             `
             break;
         case "descanso-longo":
@@ -81,7 +81,6 @@ function alterarContexto(contexto) {
             break;
     }
 }
-
 
 const contagemRegressiva = () => {
     if(tempoEmSegundos <= 0) {
