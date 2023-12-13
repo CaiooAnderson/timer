@@ -205,7 +205,8 @@ h1, h2, h3, h4, h5, h6 {
     outline: inherit;
 }
 
-.app__music-button:focus {
+.app__music-button:focus,
+.app__music-button.active {
     border-radius: 0.8rem;
     box-shadow: 0 0 8px #0a7f97;
     background: linear-gradient(to bottom, #1e579900 0%,#3c1257 15%, #44159C 19%,#44159c 20%,#6F1F9E 50%,#6F1F9E 80%,#44159C 81%,#3c1257 85%,#1e579900 100%);
