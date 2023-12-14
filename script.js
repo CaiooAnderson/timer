@@ -31,14 +31,34 @@ seletorDeMusica.forEach(botaoMusica => {
         const contexto = botaoMusica.getAttribute('data-contexto')
         marcarBotaoAtivo(botaoMusica)
         escolherMusica(contexto)
+        rotacionarIcone(contexto)
     })
 })
+
+function rotacionarIcone(contexto) {
+    document.querySelectorAll('app__music-icon').forEach(icon => {
+        icon.classList.remove('active');
+    })
+    const icon = document.querySelector(`.app__music-icon--${contexto}`)
+    if (icon) {
+        icon.classList.add('active')
+    } if (!contexto) {
+        icon.classList.remove('active')
+    }
+}
 
 function marcarBotaoAtivo(botaoAtivo) {
     seletorDeMusica.forEach(botao => {
         botao.classList.remove('active')
+        const contexto = botao.getAttribute('data-contexto')
+        const icon = document.querySelector(`.app__music-icon--${contexto}`)
+        if (icon) {
+            icon.classList.remove('active')
+        }
     })
     botaoAtivo.classList.add('active')
+    const contexto = botaoAtivo.getAttribute('data-contexto')
+    rotacionarIcone(contexto)
 }
 
 function escolherMusica(contexto) {

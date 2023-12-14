@@ -179,6 +179,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* music list */
+.app__music-list-item {
+    display: flex;
+}
 
 .app__music-list {
     list-style: none;
@@ -203,6 +206,10 @@ h1, h2, h3, h4, h5, h6 {
     border: none;
     cursor: pointer;
     outline: inherit;
+}
+
+.app__music-icon {
+    display: none;
 }
 
 .app__music-button:focus,
@@ -280,9 +287,79 @@ h1, h2, h3, h4, h5, h6 {
 
     .app__title {
         font-size: 2.6rem;
+        margin: auto 1rem;
+        text-align: center;
     }
 
     .app__card-timer {
         font-size: 6rem;
+    }
+}
+
+@media (max-width: 358px) {
+    .app__card-button,
+    .app__music-button {
+        font-size: 1.5rem;
+    }
+
+    .app__card-timer {
+        font-size: 5rem;
+    }
+}
+
+/* responsividade - Galaxy Fold */
+@media (max-width: 315px) {
+    .app__music-list {
+        display: block;
+    }
+    
+    .app__music-icon--lo-fi.active {
+        transform: rotate(720deg);
+        transition: 0.5s;
+      }
+      
+      .app__music-icon--rock.active {
+        transform: rotate(720deg);
+        transition: 0.5s;
+    }
+    
+    .app__music-icon--eletronica.active {
+        transform: rotate(720deg);
+        transition: 0.5s;
+      }
+
+    .app__music-icon {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        width: 1.6rem;
+        height: 1.6rem;
+        margin-top: 1rem;
+        margin-right: 0.1rem;
+        transform: rotate(0deg);
+        transition: transform 1s ease;
+    }
+    
+    .app__card-button {
+        font-size: 1.4rem;
+    }
+
+    .app__card-timer {
+        font-size: 4.6rem;
+    }
+
+    .toggle-switch {
+        width: 5rem;
+        height: 2.8rem;
+    }
+
+    .toggle-switch:before {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .toggle-checkbox:checked + .toggle-switch:before {
+        left: 2.5rem;
     }
 }
