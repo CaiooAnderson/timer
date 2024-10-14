@@ -36,7 +36,7 @@ seletorDeMusica.forEach(botaoMusica => {
 })
 
 function rotacionarIcone(contexto) {
-    document.querySelectorAll('app__music-icon').forEach(icon => {
+    document.querySelectorAll('.app__music-icon').forEach(icon => {
         icon.classList.remove('active');
     })
     const icon = document.querySelector(`.app__music-icon--${contexto}`)
@@ -171,7 +171,18 @@ const contagemRegressiva = () => {
         tempoZerado.play()
         tempoZerado.volume = 0.75
         zerar()
-        return
+        const focoAtivo = html.getAttribute('data-contexto') === 'foco'
+        if (focoAtivo) {
+            var event = new CustomEvent("TarefaFinalizada", {
+                detail: {
+                    message: "A tarefa foi concluída com sucesso!",
+                    time: new Date(),
+                },
+                bubbles: true,
+                cancelable: true
+            })
+            document.dispatchEvent(event);
+        }
     }
     tempoEmSegundos -= 1
     mostrarTempo()
