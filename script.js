@@ -134,8 +134,8 @@ longoBotao.addEventListener('click', () => {
 
 function alterarContexto(contexto) {
     mostrarTempo()
-    botoes.forEach(function (contexto) {
-        contexto.classList.remove('active')
+    botoes.forEach(function (botao) {
+        botao.classList.remove('active')
     })
     if (tipoAtual !== contexto) {
         zerar()
@@ -173,7 +173,7 @@ const contagemRegressiva = () => {
         zerar()
         const focoAtivo = html.getAttribute('data-contexto') === 'foco'
         if (focoAtivo) {
-            var event = new CustomEvent("TarefaFinalizada", {
+            const event = new CustomEvent("TarefaFinalizada", {
                 detail: {
                     message: "A tarefa foi concluída com sucesso!",
                     time: new Date(),
@@ -183,6 +183,7 @@ const contagemRegressiva = () => {
             })
             document.dispatchEvent(event);
         }
+        return
     }
     tempoEmSegundos -= 1
     mostrarTempo()
