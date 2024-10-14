@@ -121,7 +121,7 @@ focoBotao.addEventListener('click', () => {
 })
 
 curtoBotao.addEventListener('click', () => {
-    tempoEmSegundos = 300
+    tempoEmSegundos = 10
     alterarContexto('descanso-curto')
     curtoBotao.classList.add('active')
 })
