@@ -42,6 +42,8 @@ const atualizarUI = () => {
     const ulTarefas = document.querySelector('.app__section-task-list');
     const formAdicionarTarefa = document.querySelector('.app__form-add-task');
     const btnAdicionarTarefa = document.querySelector('.app__button--add-task');
+    const maisInfoBotao = document.querySelector('.app_button-more');
+    const taskHeader = document.querySelector('.app__section-task-header__ul');
     const textarea = document.querySelector('.app__form-textarea');
     const labelTarefaAtiva = document.querySelector('.app__section-active-task-description');
     const btnCancelar = document.querySelector('.app__form-footer__button--cancel');
@@ -72,6 +74,14 @@ const atualizarUI = () => {
         });
         atualizarUI();
     };
+    maisInfoBotao.onclick = () => {
+        taskHeader.classList.toggle('active');
+    };
+    document.onclick = (event) => {
+        if (!maisInfoBotao.contains(event.target) && !taskHeader.contains(event.target)) {
+            taskHeader.classList.remove('active');
+        }
+    };
     btnCancelar.onclick = () => {
         formAdicionarTarefa.classList.add('hidden');
     };
@@ -82,10 +92,12 @@ const atualizarUI = () => {
     };
     btnDeletarConcluidas.onclick = () => {
         estadoInicial = deletarTodasConcluidas(estadoInicial);
+        taskHeader.classList.remove('active');
         atualizarUI();
     };
     btnDeletarTodas.onclick = () => {
         estadoInicial = deletarTodas(estadoInicial);
+        taskHeader.classList.remove('active');
         atualizarUI();
     };
     if (ulTarefas) {

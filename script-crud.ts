@@ -63,6 +63,8 @@ const atualizarUI = () => {
     const ulTarefas = document.querySelector('.app__section-task-list')
     const formAdicionarTarefa = document.querySelector<HTMLFormElement>('.app__form-add-task')
     const btnAdicionarTarefa = document.querySelector<HTMLButtonElement>('.app__button--add-task')
+    const maisInfoBotao = document.querySelector('.app_button-more') as HTMLElement
+    const taskHeader = document.querySelector('.app__section-task-header__ul') as HTMLElement
     const textarea = document.querySelector<HTMLTextAreaElement>('.app__form-textarea')
     const labelTarefaAtiva = document.querySelector<HTMLParagraphElement>('.app__section-active-task-description')
     const btnCancelar: HTMLButtonElement = document.querySelector('.app__form-footer__button--cancel') as HTMLButtonElement
@@ -96,6 +98,16 @@ const atualizarUI = () => {
         atualizarUI()
     }
 
+    maisInfoBotao.onclick = () => {
+        taskHeader.classList.toggle('active')
+    }
+
+    document.onclick = (event: Event) => {
+        if (!maisInfoBotao.contains(event.target as Node) && !taskHeader.contains (event.target as Node)) {
+            taskHeader.classList.remove('active')
+        }
+    }
+
     btnCancelar.onclick = () => {
         formAdicionarTarefa!.classList.add('hidden');
     }
@@ -106,10 +118,12 @@ const atualizarUI = () => {
     }
     btnDeletarConcluidas.onclick = () => {
         estadoInicial = deletarTodasConcluidas(estadoInicial);
+        taskHeader.classList.remove('active')
         atualizarUI();
     }
     btnDeletarTodas.onclick = () => {
         estadoInicial = deletarTodas(estadoInicial);
+        taskHeader.classList.remove('active')
         atualizarUI();
     }
 

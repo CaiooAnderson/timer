@@ -166,11 +166,12 @@ function alterarContexto(contexto) {
     }
 }
 
+let cronometroAtivo = false;
+
 const contagemRegressiva = () => {
     if(tempoEmSegundos <= 0) {
         tempoZerado.play()
         tempoZerado.volume = 0.75
-        zerar()
         const focoAtivo = html.getAttribute('data-contexto') === 'foco'
         if (focoAtivo) {
             const event = new CustomEvent("TarefaFinalizada", {
@@ -183,10 +184,30 @@ const contagemRegressiva = () => {
             })
             document.dispatchEvent(event);
         }
-        return
+        switch (tipoAtual) {
+            case 'foco':
+                tempoEmSegundos = 1500;
+                break;
+            case 'descanso-curto':
+                tempoEmSegundos = 300;
+                break;
+            case 'descanso-longo':
+                tempoEmSegundos = 900;
+                break;
+            default:
+                tempoEmSegundos = 1500;
+                break;
+        }
+
+        mostrarTempo(); 
+        cronometroAtivo = false;
+        return;
     }
-    tempoEmSegundos -= 1
-    mostrarTempo()
+
+    if (cronometroAtivo) {
+        tempoEmSegundos -= 1;
+        mostrarTempo();
+    }   
 }
 
 botaoComecar.addEventListener('click', iniciarOuPausar)
@@ -198,6 +219,7 @@ function iniciarOuPausar() {
         zerar()
         return
     }
+    cronometroAtivo = true
     tempoIniciado.play()
     tempoIniciado.volume = 0.5
     intervaloId = setInterval(contagemRegressiva, 1000)
@@ -210,6 +232,7 @@ function zerar() {
     iniciarOuPausarBt.textContent = "Começar"
     iconeStartStop.setAttribute('src', `/imagens/play_arrow.png`)
     intervaloId = null
+    cronometroAtivo = false
 }
 
 function mostrarTempo() {
