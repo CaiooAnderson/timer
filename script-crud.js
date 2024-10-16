@@ -4,15 +4,26 @@ let estadoInicial = {
     tarefaSelecionada: null,
     editando: false
 };
+const atualizarLocalStorage = (tarefas) => {
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+};
+const carregarTarefasDoLocalStorage = () => {
+    const tarefasSalvas = localStorage.getItem('tarefas');
+    return tarefasSalvas ? JSON.parse(tarefasSalvas) : [];
+};
+estadoInicial.tarefas = carregarTarefasDoLocalStorage();
 const selecionarTarefa = (estado, tarefa) => {
     return Object.assign(Object.assign({}, estado), { tarefaSelecionada: tarefa === estado.tarefaSelecionada ? null : tarefa });
 };
 const adicionarTarefa = (estado, tarefa) => {
+    const novasTarefas = [...estado.tarefas, tarefa];
+    atualizarLocalStorage(novasTarefas);
     return Object.assign(Object.assign({}, estado), { tarefas: [...estado.tarefas, tarefa] });
 };
 const deletar = (estado) => {
     if (estado.tarefaSelecionada) {
         const tarefas = estado.tarefas.filter(t => t != estado.tarefaSelecionada);
+        atualizarLocalStorage(tarefas);
         return Object.assign(Object.assign({}, estado), { tarefas, tarefaSelecionada: null, editando: false });
     }
     else {
@@ -20,10 +31,12 @@ const deletar = (estado) => {
     }
 };
 const deletarTodas = (estado) => {
+    atualizarLocalStorage([]);
     return Object.assign(Object.assign({}, estado), { tarefas: [], tarefaSelecionada: null, editando: false });
 };
 const deletarTodasConcluidas = (estado) => {
     const tarefas = estado.tarefas.filter(t => !t.concluida);
+    atualizarLocalStorage(tarefas);
     return Object.assign(Object.assign({}, estado), { tarefas, tarefaSelecionada: null, editando: false });
 };
 const editarTarefa = (estado, tarefa) => {

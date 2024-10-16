@@ -15,8 +15,18 @@ let estadoInicial: EstadoAplicacao = {
     editando: false
 }
 
+const atualizarLocalStorage = (tarefas: Tarefa[]) => {
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+}
+
+const carregarTarefasDoLocalStorage = (): Tarefa[] => {
+    const tarefasSalvas = localStorage.getItem('tarefas');
+    return tarefasSalvas ? JSON.parse(tarefasSalvas): [];
+}
+
+estadoInicial.tarefas = carregarTarefasDoLocalStorage();
+
 const selecionarTarefa = (estado: EstadoAplicacao, tarefa: Tarefa): EstadoAplicacao => {
-    
     return {
         ...estado,
         tarefaSelecionada: tarefa === estado.tarefaSelecionada ? null : tarefa
@@ -24,6 +34,8 @@ const selecionarTarefa = (estado: EstadoAplicacao, tarefa: Tarefa): EstadoAplica
 }
 
 const adicionarTarefa = (estado: EstadoAplicacao, tarefa: Tarefa) : EstadoAplicacao => {
+    const novasTarefas = [...estado.tarefas, tarefa]
+    atualizarLocalStorage(novasTarefas)
     return {
         ...estado,
         tarefas: [...estado.tarefas, tarefa]
@@ -33,16 +45,19 @@ const adicionarTarefa = (estado: EstadoAplicacao, tarefa: Tarefa) : EstadoAplica
 const deletar = (estado: EstadoAplicacao): EstadoAplicacao => {
     if (estado.tarefaSelecionada) {
         const tarefas = estado.tarefas.filter(t => t != estado.tarefaSelecionada);
+        atualizarLocalStorage(tarefas);
         return { ...estado, tarefas, tarefaSelecionada: null, editando: false };
     } else {
         return estado;
     }
 }
 const deletarTodas = (estado: EstadoAplicacao): EstadoAplicacao => {
+    atualizarLocalStorage([]);
     return { ...estado, tarefas: [], tarefaSelecionada: null, editando: false };
 }
 const deletarTodasConcluidas = (estado: EstadoAplicacao): EstadoAplicacao => {
     const tarefas = estado.tarefas.filter(t => !t.concluida);
+    atualizarLocalStorage(tarefas);
     return { ...estado, tarefas, tarefaSelecionada: null, editando: false };
 }
 const editarTarefa = (estado: EstadoAplicacao, tarefa: Tarefa): EstadoAplicacao => {
