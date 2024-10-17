@@ -104,14 +104,33 @@ const atualizarUI = () => {
     }
 
     formAdicionarTarefa!.onsubmit = (evento) => {
-        evento.preventDefault()
-        const descricao = textarea!.value
-        estadoInicial = adicionarTarefa(estadoInicial, {
-            descricao,
-            concluida: false
-        })
-        atualizarUI()
-    }
+        evento.preventDefault();
+        const descricao = textarea!.value;
+    
+        if (estadoInicial.editando && estadoInicial.tarefaSelecionada) {
+            const tarefaEditada: Tarefa = {
+                ...estadoInicial.tarefaSelecionada,
+                descricao: descricao
+            };
+            estadoInicial = {
+                ...estadoInicial,
+                tarefas: estadoInicial.tarefas.map(tarefa => 
+                    tarefa === estadoInicial.tarefaSelecionada ? tarefaEditada : tarefa
+                ),
+                editando: false,
+                tarefaSelecionada: null
+            };
+            atualizarLocalStorage(estadoInicial.tarefas);
+        } else {
+            estadoInicial = adicionarTarefa(estadoInicial, {
+                descricao,
+                concluida: false
+            });
+        }
+        textarea!.value = '';
+        formAdicionarTarefa!.classList.add('hidden');
+        atualizarUI();
+    };
 
     maisInfoBotao.onclick = () => {
         taskHeader.classList.toggle('active')

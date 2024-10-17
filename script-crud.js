@@ -81,10 +81,19 @@ const atualizarUI = () => {
     formAdicionarTarefa.onsubmit = (evento) => {
         evento.preventDefault();
         const descricao = textarea.value;
-        estadoInicial = adicionarTarefa(estadoInicial, {
-            descricao,
-            concluida: false
-        });
+        if (estadoInicial.editando && estadoInicial.tarefaSelecionada) {
+            const tarefaEditada = Object.assign(Object.assign({}, estadoInicial.tarefaSelecionada), { descricao: descricao });
+            estadoInicial = Object.assign(Object.assign({}, estadoInicial), { tarefas: estadoInicial.tarefas.map(tarefa => tarefa === estadoInicial.tarefaSelecionada ? tarefaEditada : tarefa), editando: false, tarefaSelecionada: null });
+            atualizarLocalStorage(estadoInicial.tarefas);
+        }
+        else {
+            estadoInicial = adicionarTarefa(estadoInicial, {
+                descricao,
+                concluida: false
+            });
+        }
+        textarea.value = '';
+        formAdicionarTarefa.classList.add('hidden');
         atualizarUI();
     };
     maisInfoBotao.onclick = () => {
