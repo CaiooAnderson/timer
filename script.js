@@ -250,5 +250,3 @@ function pausarTempo() {
         iniciarOuPausar()
     }
 }
-
-document.addEventListener('visibilitychange', pausarTempo)
